@@ -1,4 +1,4 @@
-# CrudSharp--mssql-with-entity
+# crud-sharp-ef-mssql
 
 1 - Description
 
