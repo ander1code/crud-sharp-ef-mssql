@@ -15,3 +15,5 @@
 
   - Edition
     - Open the project in Visual Studio 2013 or higher, and have installed SQL SERVER 2014.
+
+**P.S.:** For licensing reasons, the original project database was deleted. If you want to test, modify the project with your connection string and run the inserted * .sql file separately. 
