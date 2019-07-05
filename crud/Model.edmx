@@ -1,0 +1,228 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="dbRegistrationModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="PERSON">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="NAME" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="EMAIL" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PHYSICALPERSON">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="PERSON_ID" Type="int" Nullable="false" />
+          <Property Name="SALARY" Type="decimal" Precision="12" Scale="2" Nullable="false" />
+          <Property Name="DATEBIRTH" Type="date" Nullable="false" />
+          <Property Name="GENRE" Type="char" MaxLength="1" Nullable="false" />
+        </EntityType>
+        <EntityType Name="USERSYS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="USERNAME" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="USERPASS" Type="varchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="USERSYS_LOGIN">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="USERSYS_ID" Type="int" Nullable="false" />
+          <Property Name="DATELOG" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__PHYSICALPERSON_PERSON">
+          <End Role="PERSON" Type="Self.PERSON" Multiplicity="1" />
+          <End Role="PHYSICALPERSON" Type="Self.PHYSICALPERSON" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PERSON">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PHYSICALPERSON">
+              <PropertyRef Name="PERSON_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__USERSYS_LOGIN__USERSYS">
+          <End Role="USERSYS" Type="Self.USERSYS" Multiplicity="1" />
+          <End Role="USERSYS_LOGIN" Type="Self.USERSYS_LOGIN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERSYS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="USERSYS_LOGIN">
+              <PropertyRef Name="USERSYS_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="dbRegistrationModelStoreContainer">
+          <EntitySet Name="PERSON" EntityType="Self.PERSON" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PHYSICALPERSON" EntityType="Self.PHYSICALPERSON" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="USERSYS" EntityType="Self.USERSYS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="USERSYS_LOGIN" EntityType="Self.USERSYS_LOGIN" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__PHYSICALPERSON_PERSON" Association="Self.FK__PHYSICALPERSON_PERSON">
+            <End Role="PERSON" EntitySet="PERSON" />
+            <End Role="PHYSICALPERSON" EntitySet="PHYSICALPERSON" />
+          </AssociationSet>
+          <AssociationSet Name="FK__USERSYS_LOGIN__USERSYS" Association="Self.FK__USERSYS_LOGIN__USERSYS">
+            <End Role="USERSYS" EntitySet="USERSYS" />
+            <End Role="USERSYS_LOGIN" EntitySet="USERSYS_LOGIN" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="dbRegistrationModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="PERSON">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EMAIL" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="PHYSICALPERSON" Relationship="Self.FK__PHYSICALPERSON_PERSON" FromRole="PERSON" ToRole="PHYSICALPERSON" />
+        </EntityType>
+        <EntityType Name="PHYSICALPERSON">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="PERSON_ID" Type="Int32" Nullable="false" />
+          <Property Name="SALARY" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+          <Property Name="DATEBIRTH" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="GENRE" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="PERSON" Relationship="Self.FK__PHYSICALPERSON_PERSON" FromRole="PHYSICALPERSON" ToRole="PERSON" />
+        </EntityType>
+        <EntityType Name="USERSYS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="USERNAME" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="USERPASS" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="USERSYS_LOGIN" Relationship="Self.FK__USERSYS_LOGIN__USERSYS" FromRole="USERSYS" ToRole="USERSYS_LOGIN" />
+        </EntityType>
+        <EntityType Name="USERSYS_LOGIN">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="USERSYS_ID" Type="Int32" Nullable="false" />
+          <Property Name="DATELOG" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="USERSYS" Relationship="Self.FK__USERSYS_LOGIN__USERSYS" FromRole="USERSYS_LOGIN" ToRole="USERSYS" />
+        </EntityType>
+        <Association Name="FK__PHYSICALPERSON_PERSON">
+          <End Role="PERSON" Type="Self.PERSON" Multiplicity="1" />
+          <End Role="PHYSICALPERSON" Type="Self.PHYSICALPERSON" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PERSON">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PHYSICALPERSON">
+              <PropertyRef Name="PERSON_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__USERSYS_LOGIN__USERSYS">
+          <End Role="USERSYS" Type="Self.USERSYS" Multiplicity="1" />
+          <End Role="USERSYS_LOGIN" Type="Self.USERSYS_LOGIN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERSYS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="USERSYS_LOGIN">
+              <PropertyRef Name="USERSYS_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="dbRegistrationContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="PERSON" EntityType="Self.PERSON" />
+          <EntitySet Name="PHYSICALPERSON" EntityType="Self.PHYSICALPERSON" />
+          <EntitySet Name="USERSYS" EntityType="Self.USERSYS" />
+          <EntitySet Name="USERSYS_LOGIN" EntityType="Self.USERSYS_LOGIN" />
+          <AssociationSet Name="FK__PHYSICALPERSON_PERSON" Association="Self.FK__PHYSICALPERSON_PERSON">
+            <End Role="PERSON" EntitySet="PERSON" />
+            <End Role="PHYSICALPERSON" EntitySet="PHYSICALPERSON" />
+          </AssociationSet>
+          <AssociationSet Name="FK__USERSYS_LOGIN__USERSYS" Association="Self.FK__USERSYS_LOGIN__USERSYS">
+            <End Role="USERSYS" EntitySet="USERSYS" />
+            <End Role="USERSYS_LOGIN" EntitySet="USERSYS_LOGIN" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="dbRegistrationModelStoreContainer" CdmEntityContainer="dbRegistrationContext">
+          <EntitySetMapping Name="PERSON">
+            <EntityTypeMapping TypeName="dbRegistrationModel.PERSON">
+              <MappingFragment StoreEntitySet="PERSON">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="NAME" ColumnName="NAME" />
+                <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PHYSICALPERSON">
+            <EntityTypeMapping TypeName="dbRegistrationModel.PHYSICALPERSON">
+              <MappingFragment StoreEntitySet="PHYSICALPERSON">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="PERSON_ID" ColumnName="PERSON_ID" />
+                <ScalarProperty Name="SALARY" ColumnName="SALARY" />
+                <ScalarProperty Name="DATEBIRTH" ColumnName="DATEBIRTH" />
+                <ScalarProperty Name="GENRE" ColumnName="GENRE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="USERSYS">
+            <EntityTypeMapping TypeName="dbRegistrationModel.USERSYS">
+              <MappingFragment StoreEntitySet="USERSYS">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="USERNAME" ColumnName="USERNAME" />
+                <ScalarProperty Name="USERPASS" ColumnName="USERPASS" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="USERSYS_LOGIN">
+            <EntityTypeMapping TypeName="dbRegistrationModel.USERSYS_LOGIN">
+              <MappingFragment StoreEntitySet="USERSYS_LOGIN">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="USERSYS_ID" ColumnName="USERSYS_ID" />
+                <ScalarProperty Name="DATELOG" ColumnName="DATELOG" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
